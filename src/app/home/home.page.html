@@ -15,5 +15,23 @@
 
 <!--Main content of the page, search and trending movies.-->
 <ion-content [fullscreen]="true">
+
+  <!--Heading above the list of trending movies.(ion-padding-start is an Ionic class that gives padding to the element) -->
+  <h2 class="ion-padding-start">Today's Trending Movies</h2>
+
+  <!--Container for the list of movie cards. Each card will be added to the list. List handles spacing automatically-->
+  <ion-list>
+
+    <!--*ngFor loops through movies array (filled by getTrending() in ngOnInit). Creates one card per movie-->
+    <ion-card *ngFor="let movie of movies">
+    <!--Squar brackets - property binding. Joins TMDB image base with the poster_path from the API-->
+      <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
+      <ion-card-content>
+        <!--Curly braces - interpolation. Inserts movie overview as text-->
+        {{ movie.overview }}
+      </ion-card-content>
+    </ion-card>
+
+  </ion-list>
   
 </ion-content>

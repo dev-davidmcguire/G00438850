@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonRouterLink, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonRouterLink, IonIcon, IonList, IonCard, IonCardContent } from '@ionic/angular/standalone';
 //Importing MovieService to access API methods.
 import { MovieService } from '../services/movie';
 //Allows for use of icons in the template
@@ -15,7 +15,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButtons, IonButton, IonRouterLink, RouterLink, IonIcon]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButtons, IonButton, IonRouterLink, RouterLink, IonIcon, IonList, IonCard, IonCardContent]
 })
 export class HomePage implements OnInit {
 
