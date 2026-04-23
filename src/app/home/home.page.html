@@ -1,13 +1,19 @@
+<!--Top header, always visible. Holds student number and favourites icon.-->
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>home</ion-title>
+    <!--Student number on home page as per spec.-->
+    <ion-title>G00438850</ion-title>
+    <!--Puts button at the end of the toolbar(right), routerlink navigates to favourites page-->
+    <ion-buttons slot="end">
+      <ion-button routerLink="/favourites">
+        <!--pulls icon from Ionicons, "icon-only" = no text-->
+        <ion-icon name="heart" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+<!--Main content of the page, search and trending movies.-->
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  
 </ion-content>
