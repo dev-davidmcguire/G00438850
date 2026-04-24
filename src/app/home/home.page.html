@@ -23,8 +23,9 @@
   <ion-list>
 
     <!--*ngFor loops through movies array (filled by getTrending() in ngOnInit). Creates one card per movie-->
-    <ion-card *ngFor="let movie of movies">
-    <!--Squar brackets - property binding. Joins TMDB image base with the poster_path from the API-->
+    <!--butteon=true styles the card as clickable. Clicking the card calls goToMovie(), with this movies TMDB id-->
+    <ion-card *ngFor="let movie of movies" (click)="goToMovie(movie.id)" button="true">
+    <!--Square brackets - property binding. Joins TMDB image base with the poster_path from the API-->
       <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
       <ion-card-content>
         <!--Curly braces - interpolation. Inserts movie overview as text-->

@@ -7,8 +7,9 @@ import { MovieService } from '../services/movie';
 //Allows for use of icons in the template
 import { addIcons } from 'ionicons';
 import { heart } from 'ionicons/icons';
-//Button navigation didnt work with just IonRouterLink.
-import { RouterLink } from '@angular/router';
+//Button navigation didnt work with just IonRouterLink. routerLink = directive used in templates with [routerLink]
+//Router - service for navigation (this.router.navigate)
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -22,8 +23,9 @@ export class HomePage implements OnInit {
   //Store movies returned from API in an array.
   movies: any[] = [];
 
-  //MovieService injected via constructor.
-  constructor(private movieService: MovieService) { 
+  //Dependency Injection - gives us instances of MovieService and Router.
+  //Services injected here, not in imports array.
+  constructor(private movieService: MovieService, private router: Router) { 
 
     addIcons({heart});
 
@@ -36,6 +38,12 @@ export class HomePage implements OnInit {
     this.movieService.getTrending().subscribe((data: any) => {
       this.movies = data.results;
     })
+  }
+
+  //navigate to movie details for the clicked movie using Router service.
+  //passes movies TMDB id as router param. Matches id: in app.routes.ts
+  goToMovie(id: number) {
+    this.router.navigate(['/movie-details', id])
   }
 
 }
