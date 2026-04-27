@@ -40,6 +40,7 @@ export class HomePage implements OnInit {
     })
   }
 
+
   //navigate to movie details for the clicked movie using Router service.
   //passes movies TMDB id as router param. Matches id: in app.routes.ts
   goToMovie(id: number) {

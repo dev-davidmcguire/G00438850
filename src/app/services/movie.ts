@@ -17,4 +17,12 @@ export class MovieService {
     return this.http.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=${this.apiKey}`);
   }
 
+  //Asks TMDB to search for movies matching the text the user typed in.
+  //Returns an Observable - the home page subscribes to get the actual results.
+  searchMovies(query: string) {
+    return this.http.get(`https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${this.apiKey}`);
+  }
+
+  
+
 }
