@@ -52,9 +52,23 @@ export class HomePage implements OnInit {
   //Called when search button is clicked, sends users query to MovieService.searchMovies().
   //Subscribes to observable, replaces movie array with search results.
   onSearch() {
-    this.movieService.searchMovies(this.searchQuery).subscribe((data: any) => {
-      this.movies = data.results;
-    });
-  }
 
+    //Trim once and reuse
+    const query = this.searchQuery.trim();
+
+    //If user clicks search with nothing or only spaces, show trending movies.
+    if (query === '' ) {
+      this.movieService.getTrending().subscribe((data: any) => {
+          this.movies = data.results;
+      });
+
+      //Send the trimmed query to TMDB
+    } else {
+      this.movieService.searchMovies(query).subscribe((data: any) => {
+        this.movies = data.results;
+
+    });
+
+    }
+  }
 }
