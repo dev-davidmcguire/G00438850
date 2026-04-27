@@ -26,6 +26,9 @@ export class HomePage implements OnInit {
   //Stores text that user types in the searchbar. Two-way binding with ngModel for real time sync with input field.
   searchQuery: string = '';
 
+  //Label for currently displayed movies. Seperate from searchQuery so the heading matches whats on screen.
+  displayedQuery: string = '';
+
   //Dependency Injection - gives us instances of MovieService and Router.
   //Services injected here, not in imports array.
   constructor(private movieService: MovieService, private router: Router) { 
@@ -60,12 +63,19 @@ export class HomePage implements OnInit {
     if (query === '' ) {
       this.movieService.getTrending().subscribe((data: any) => {
           this.movies = data.results;
+
+          //Reset heading label, empty returns trending.
+          this.displayedQuery = '';
+
       });
 
       //Send the trimmed query to TMDB
     } else {
       this.movieService.searchMovies(query).subscribe((data: any) => {
         this.movies = data.results;
+        //Update heading label - the term that was searched.
+        //inside .subscribe() so the heading does not update before the movies are returned.
+        this.displayedQuery = query;
 
     });
 

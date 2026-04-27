@@ -26,7 +26,12 @@
   <ion-button expand="block" (click)="onSearch()">SEARCH</ion-button>
 
   <!--Heading above the list of trending movies.(ion-padding-start is an Ionic class that gives padding to the element) -->
-  <h2 class="ion-padding-start">Today's Trending Movies</h2>
+  <!--<h2 class="ion-padding-start">Today's Trending Movies</h2>-->
+
+  <!--Two versions of heading, controlled by *ngIf. Only one present in the Dom-->
+  <!--displayedQuery empty = trending heading shown. Otherwise, search heading shown with the query interpolated.-->
+  <h2 *ngIf="displayedQuery === ''" class="ion-padding-start">Today's Trending Movies</h2>
+  <h2 *ngIf="displayedQuery !== ''" class="ion-padding-start">{{ displayedQuery }} Movies</h2>
 
   <!--Container for the list of movie cards. Each card will be added to the list. List handles spacing automatically-->
   <ion-list>
