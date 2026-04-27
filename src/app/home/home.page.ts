@@ -47,9 +47,9 @@ export class HomePage implements OnInit {
   }
 
   //navigate to movie details for the clicked movie using Router service.
-  //passes movies TMDB id as router param. Matches id: in app.routes.ts
-  goToMovie(id: number) {
-    this.router.navigate(['/movie-details', id])
+  //pass the id in the url as a route param. Overview travels along router state - dont have to make another api call.
+  goToMovie(id: number, overview: string) {
+    this.router.navigate(['/movie-details', id], { state: { overview: overview }});
   }
 
   //Called when search button is clicked, sends users query to MovieService.searchMovies().

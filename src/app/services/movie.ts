@@ -22,14 +22,9 @@ export class MovieService {
   searchMovies(query: string) {
     return this.http.get(`https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${this.apiKey}`);
   }
-  
-  //Fetch full details of a movie by its TMDB id.
-  //Needed for MovieDetails Page because the credits endpoint does not return the overview.
-  getMovie(id: number) {
-    return this.http.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${this.apiKey}`);
-  }
 
-  //Fetch the cast and crew for a movie.
+  //Fetch the cast and crew for a movie by its TMDB id.
+  //Returns object with 3 keys: id, cast and crew.
   getMovieCredits(id: number) {
     return this.http.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${this.apiKey}`);
   }
