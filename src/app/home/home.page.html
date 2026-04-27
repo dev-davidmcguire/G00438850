@@ -16,6 +16,15 @@
 <!--Main content of the page, search and trending movies.-->
 <ion-content [fullscreen]="true">
 
+  <!--Search bar allowing user to enter a movie name to search, ion-input is the input field-->
+  <!--[(ngModel)] keeps searchQuery in sync with input field as user types (two way binding)-->
+  <ion-item>
+    <ion-input label="Search" placeholder="Movie Name" [(ngModel)]="searchQuery"></ion-input>
+  </ion-item>
+
+  <!--Search button. expand="block" maket it stretch , matching spec. (click) = event binding, calls onSearch()-->
+  <ion-button expand="block" (click)="onSearch()">SEARCH</ion-button>
+
   <!--Heading above the list of trending movies.(ion-padding-start is an Ionic class that gives padding to the element) -->
   <h2 class="ion-padding-start">Today's Trending Movies</h2>
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonRouterLink, IonIcon, IonList, IonCard, IonCardContent } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonRouterLink, IonIcon, IonList, IonCard, IonCardContent, IonInput, IonItem } from '@ionic/angular/standalone';
 //Importing MovieService to access API methods.
 import { MovieService } from '../services/movie';
 //Allows for use of icons in the template
@@ -16,12 +16,15 @@ import { RouterLink, Router } from '@angular/router';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButtons, IonButton, IonRouterLink, RouterLink, IonIcon, IonList, IonCard, IonCardContent]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButtons, IonButton, IonRouterLink, RouterLink, IonIcon, IonList, IonCard, IonCardContent, IonInput, IonItem]
 })
 export class HomePage implements OnInit {
 
   //Store movies returned from API in an array.
   movies: any[] = [];
+
+  //Stores text that user types in the searchbar. Two-way binding with ngModel for real time sync with input field.
+  searchQuery: string = '';
 
   //Dependency Injection - gives us instances of MovieService and Router.
   //Services injected here, not in imports array.
@@ -40,11 +43,18 @@ export class HomePage implements OnInit {
     })
   }
 
-
   //navigate to movie details for the clicked movie using Router service.
   //passes movies TMDB id as router param. Matches id: in app.routes.ts
   goToMovie(id: number) {
     this.router.navigate(['/movie-details', id])
+  }
+
+  //Called when search button is clicked, sends users query to MovieService.searchMovies().
+  //Subscribes to observable, replaces movie array with search results.
+  onSearch() {
+    this.movieService.searchMovies(this.searchQuery).subscribe((data: any) => {
+      this.movies = data.results;
+    });
   }
 
 }
