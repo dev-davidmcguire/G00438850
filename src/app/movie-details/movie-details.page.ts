@@ -16,8 +16,9 @@ export class MovieDetailsPage implements OnInit {
   //Hold movie id from URL route param. string | null = param.get() can return null if param is missing.
   movieId: string | null = null;
   overview: string = '';
-  //Holds cast array from getMovieCredits
+  //Holds cast and crew arrays from getMovieCredits
   cast: any[] = [];
+  crew: any[] = [];
 
   //injected Activated route to read URL params, MovieService to call getMovieCredits.
   constructor(private route: ActivatedRoute, private movieService: MovieService) { }
@@ -30,9 +31,11 @@ export class MovieDetailsPage implements OnInit {
 
       //Fetch cast and crew when we have the id - Number() converts string id from URL to number API expects.
       this.movieService.getMovieCredits(Number(this.movieId)).subscribe((data: any) => {
-        //Save cast array to class property so the template can render using *ngFor.
+        //Save cast/crew arrays to class property so the template can render using *ngFor.
         this.cast = data.cast;
+        this.crew = data.crew;
         console.log('Cast Received:', this.cast);
+        console.log('Crew Received:', this.crew);
       })
     });
 
