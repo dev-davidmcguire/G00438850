@@ -1,13 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>movie-details</ion-title>
+    <ion-title>Movie Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">movie-details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!--Movie overview passed to movie details page via router state from home page-->
+  <p class="ion-padding">{{ overview }}</p>
 </ion-content>
