@@ -7,4 +7,24 @@
 <ion-content [fullscreen]="true">
   <!--Movie overview passed to movie details page via router state from home page-->
   <p class="ion-padding">{{ overview }}</p>
+
+  <!--Cast Section-->
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Cast</ion-label>
+    </ion-list-header>
+
+    <!--loop over cast array, one ion-item per cast member-->
+    <ion-item *ngFor="let member of cast">
+      <!--Put thumnail on the left-->
+      <ion-thumbnail slot="start">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + member.profile_path" />
+      </ion-thumbnail>
+
+      <ion-label>
+        <h2>{{ member.name }}</h2>
+        <p>{{ member.character }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

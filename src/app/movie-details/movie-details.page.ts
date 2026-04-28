@@ -1,28 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel, IonItem, IonThumbnail } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
+import { MovieService } from '../services/movie';
 
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.page.html',
   styleUrls: ['./movie-details.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonListHeader, IonLabel, IonItem, IonThumbnail]
 })
 export class MovieDetailsPage implements OnInit {
   //Hold movie id from URL route param. string | null = param.get() can return null if param is missing.
   movieId: string | null = null;
   overview: string = '';
+  //Holds cast array from getMovieCredits
+  cast: any[] = [];
 
-  constructor(private route: ActivatedRoute) { }
+  //injected Activated route to read URL params, MovieService to call getMovieCredits.
+  constructor(private route: ActivatedRoute, private movieService: MovieService) { }
 
   ngOnInit() {
     //Subscribe to route param changes. Fires on load and navigates to same component with different id (one movie to another)
     this.route.paramMap.subscribe(params => {
       this.movieId = params.get('id');
       console.log('Movie id from route param:', this.movieId);
+
+      //Fetch cast and crew when we have the id - Number() converts string id from URL to number API expects.
+      this.movieService.getMovieCredits(Number(this.movieId)).subscribe((data: any) => {
+        //Save cast array to class property so the template can render using *ngFor.
+        this.cast = data.cast;
+        console.log('Cast Received:', this.cast);
+      })
     });
 
     //Read the overview passed from home page via router state. No second API call needed as Home had it from trending/search.
