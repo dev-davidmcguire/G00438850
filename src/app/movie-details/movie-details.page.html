@@ -8,14 +8,14 @@
   <!--Movie overview passed to movie details page via router state from home page-->
   <p class="ion-padding">{{ overview }}</p>
 
-  <!--Cast Section-->
+  <!--Cast Section--> <!-- TODO: No fallback for null profile path. Need to add "No Image"-->
   <ion-list>
     <ion-list-header>
       <ion-label>Cast</ion-label>
     </ion-list-header>
 
     <!--loop over cast array, one ion-item per cast member-->
-    <ion-item *ngFor="let member of cast">
+    <ion-item *ngFor="let member of cast" button="true" (click)="goToPerson(member.id)">
       <!--Put thumnail on the left-->
       <ion-thumbnail slot="start">
         <img [src]="'https://image.tmdb.org/t/p/w500' + member.profile_path" />
@@ -29,12 +29,13 @@
     </ion-item>
   </ion-list>
 
+  <!--Crew Section-->
   <ion-list>
     <ion-list-header>
       <ion-label>Crew</ion-label>
     </ion-list-header>
 
-      <ion-item *ngFor="let member of crew">
+      <ion-item *ngFor="let member of crew" button="true" (click)="goToPerson(member.id)">
         <ion-thumbnail slot="start">
           <img [src]="'https://image.tmdb.org/t/p/w500' + member.profile_path" />
         </ion-thumbnail>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel, IonItem, IonThumbnail } from '@ionic/angular/standalone';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../services/movie';
 
 @Component({
@@ -21,7 +21,7 @@ export class MovieDetailsPage implements OnInit {
   crew: any[] = [];
 
   //injected Activated route to read URL params, MovieService to call getMovieCredits.
-  constructor(private route: ActivatedRoute, private movieService: MovieService) { }
+  constructor(private route: ActivatedRoute, private movieService: MovieService, private router: Router) { }
 
   ngOnInit() {
     //Subscribe to route param changes. Fires on load and navigates to same component with different id (one movie to another)
@@ -42,6 +42,12 @@ export class MovieDetailsPage implements OnInit {
     //Read the overview passed from home page via router state. No second API call needed as Home had it from trending/search.
     this.overview = history.state.overview;
     console.log('Overview from router state:', this.overview);
+  }
+
+  goToPerson(personId: number) {
+
+    //Navigate to details page using persons TMDB id as route param
+    this.router.navigate(['/details', personId]);
   }
 
 }
