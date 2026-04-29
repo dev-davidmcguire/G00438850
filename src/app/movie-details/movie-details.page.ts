@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel, IonItem, IonThumbnail } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel, IonItem, IonThumbnail, IonIcon, IonButton, IonButtons } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../services/movie';
+import { addIcons } from 'ionicons';
+import { home, heart } from 'ionicons/icons';
 
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.page.html',
   styleUrls: ['./movie-details.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonListHeader, IonLabel, IonItem, IonThumbnail]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonListHeader, IonLabel, IonItem, IonThumbnail, IonIcon, IonButton, IonButtons]
 })
 export class MovieDetailsPage implements OnInit {
   //Hold movie id from URL route param. string | null = param.get() can return null if param is missing.
@@ -21,7 +23,9 @@ export class MovieDetailsPage implements OnInit {
   crew: any[] = [];
 
   //injected Activated route to read URL params, MovieService to call getMovieCredits.
-  constructor(private route: ActivatedRoute, private movieService: MovieService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private movieService: MovieService, private router: Router) { 
+    addIcons({ home, heart });
+  }
 
   ngOnInit() {
     //Subscribe to route param changes. Fires on load and navigates to same component with different id (one movie to another)
@@ -45,9 +49,17 @@ export class MovieDetailsPage implements OnInit {
   }
 
   goToPerson(personId: number) {
-
     //Navigate to details page using persons TMDB id as route param
     this.router.navigate(['/details', personId]);
+  }
+
+  goToHome() {
+    //Navigate to home page.
+    this.router.navigate(['/home']);
+  }
+
+  goToFavourites() {
+    this.router.navigate(['/favourites']);
   }
 
 }

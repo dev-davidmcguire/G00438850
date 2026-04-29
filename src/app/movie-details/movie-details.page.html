@@ -1,6 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Movie Details</ion-title>
+    <ion-buttons slot="end">
+    <ion-button (click)="goToHome()">
+    <ion-icon name="home"></ion-icon>
+    </ion-button>
+    <ion-button (click)="goToFavourites()">
+      <ion-icon name="heart"></ion-icon>
+    </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
