@@ -49,6 +49,7 @@ export class MovieDetailsPage implements OnInit {
     //Read the overview passed from home page via router state. No second API call needed as Home had it from trending/search.
     this.overview = history.state.overview;
     console.log('Overview from router state:', this.overview);
+
   }
 
   goToPerson(personId: number) {

@@ -29,6 +29,12 @@ export class MovieService {
     return this.http.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${this.apiKey}`);
   }
 
+  getFavourites(): any[] {
+    //localStorage stores strings only - parse JSON array
+    const stored = localStorage.getItem('favourites');
+    return stored ? JSON.parse(stored) : [];
+  }
+
   
 
 }
