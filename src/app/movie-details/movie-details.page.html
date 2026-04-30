@@ -16,6 +16,14 @@
   <!--Movie overview passed to movie details page via router state from home page-->
   <p class="ion-padding">{{ overview }}</p>
 
+  <!--Favourites buttons, *ngIf picks one based on isFavourite status-->
+  <ion-button *ngIf="!isFavourite" (click)="toggleFavourite()" expand="block">
+    Add to Favourites
+  </ion-button>
+  <ion-button *ngIf="isFavourite" (click)="toggleFavourite()" expand="block" color="danger">
+    Remove from Favourites
+  </ion-button>
+
   <!--Cast Section--> <!-- TODO: No fallback for null profile path. Need to add "No Image"-->
   <ion-list>
     <ion-list-header>

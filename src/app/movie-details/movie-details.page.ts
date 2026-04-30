@@ -22,6 +22,9 @@ export class MovieDetailsPage implements OnInit {
   cast: any[] = [];
   crew: any[] = [];
 
+  //Hardcoded - will replace with real localStorage check.
+  isFavourite: boolean = false;
+
   //injected Activated route to read URL params, MovieService to call getMovieCredits.
   constructor(private route: ActivatedRoute, private movieService: MovieService, private router: Router) { 
     addIcons({ home, heart });
@@ -60,6 +63,11 @@ export class MovieDetailsPage implements OnInit {
 
   goToFavourites() {
     this.router.navigate(['/favourites']);
+  }
+
+  toggleFavourite() {
+    //Stub. TODO - implement add/removie and localStorage
+    console.log('toggleFavourite clicked. isFavourite is currently:', this.isFavourite);
   }
 
 }
