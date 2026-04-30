@@ -48,8 +48,14 @@ export class HomePage implements OnInit {
 
   //navigate to movie details for the clicked movie using Router service.
   //pass the id in the url as a route param. Overview travels along router state - dont have to make another api call.
-  goToMovie(id: number, overview: string) {
-    this.router.navigate(['/movie-details', id], { state: { overview: overview }});
+  goToMovie(id: number, overview: string, title: string, posterPath: string) {
+    this.router.navigate(['/movie-details', id], { 
+      state: { 
+        overview: overview,
+        title: title,
+        posterPath: posterPath
+   }
+  });
   }
 
   //Called when search button is clicked, sends users query to MovieService.searchMovies().

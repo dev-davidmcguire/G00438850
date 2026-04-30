@@ -18,6 +18,8 @@ export class MovieDetailsPage implements OnInit {
   //Hold movie id from URL route param. string | null = param.get() can return null if param is missing.
   movieId: string | null = null;
   overview: string = '';
+  title: string = '';
+  posterPath: string = '';
   //Holds cast and crew arrays from getMovieCredits
   cast: any[] = [];
   crew: any[] = [];
@@ -49,9 +51,11 @@ export class MovieDetailsPage implements OnInit {
       })
     });
 
-    //Read the overview passed from home page via router state. No second API call needed as Home had it from trending/search.
+    //Read movie data passed from home via router state. No second API call needed.    
     this.overview = history.state.overview;
-    console.log('Overview from router state:', this.overview);
+    this.title = history.state.title;
+    this.posterPath = history.state.posterPath;
+    console.log('From router state:', { title: this.title, posterPath: this.posterPath, overview: this.overview });
 
   }
 
@@ -70,8 +74,18 @@ export class MovieDetailsPage implements OnInit {
   }
 
   toggleFavourite() {
-    //Stub. TODO - implement add/removie and localStorage
-    console.log('toggleFavourite clicked. isFavourite is currently:', this.isFavourite);
+    //if already a favourite, remove it, otherwise, add it. Flip the local boolean to update button label.
+    if (this.isFavourite) {
+      this.movieService.removeFavourite(Number(this.movieId));
+    } else {
+      this.movieService.addFavourite({
+        id: Number(this.movieId),
+        title: this.title,
+        poster_path: this.posterPath
+      });
+    }
+    //Flip local state, , re run *ngIf, button label swaps automatically.
+    this.isFavourite = !this.isFavourite;
   }
 
 }

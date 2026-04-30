@@ -40,6 +40,19 @@ export class MovieService {
     return this.getFavourites().some(fav => fav.id === id);
   }
 
+  addFavourite(movie: any): void {
+    //read current array, push new movie, write back to localStorage
+    const favourites = this.getFavourites();
+    favourites.push(movie);
+    localStorage.setItem('favourites', JSON.stringify(favourites));
+  }
+
+  removeFavourite(id: number): void {
+    //read current Array, filter out any entry with matching id, write back result
+    const favourites = this.getFavourites().filter(fav => fav.id !== id);
+    localStorage.setItem('favourites', JSON.stringify(favourites));
+  }
+
   
 
 }
