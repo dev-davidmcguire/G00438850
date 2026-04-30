@@ -35,6 +35,11 @@ export class MovieService {
     return stored ? JSON.parse(stored) : [];
   }
 
+  isFavourite(id: number): boolean {
+    //ask getFavourites() for the stored array, check if any entries match this id.
+    return this.getFavourites().some(fav => fav.id === id);
+  }
+
   
 
 }

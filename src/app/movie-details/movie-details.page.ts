@@ -22,7 +22,7 @@ export class MovieDetailsPage implements OnInit {
   cast: any[] = [];
   crew: any[] = [];
 
-  //Hardcoded - will replace with real localStorage check.
+  //Tracks if current movie is in favourites. Default before ngOnInit runs. Drives button label
   isFavourite: boolean = false;
 
   //injected Activated route to read URL params, MovieService to call getMovieCredits.
@@ -35,6 +35,9 @@ export class MovieDetailsPage implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.movieId = params.get('id');
       console.log('Movie id from route param:', this.movieId);
+      //check if movie is already in favourites. Drives the button in the html
+      this.isFavourite = this.movieService.isFavourite(Number(this.movieId));
+      console.log('isFavourite check result:', this.isFavourite);
 
       //Fetch cast and crew when we have the id - Number() converts string id from URL to number API expects.
       this.movieService.getMovieCredits(Number(this.movieId)).subscribe((data: any) => {
