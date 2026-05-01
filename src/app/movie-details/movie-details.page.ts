@@ -81,7 +81,8 @@ export class MovieDetailsPage implements OnInit {
       this.movieService.addFavourite({
         id: Number(this.movieId),
         title: this.title,
-        poster_path: this.posterPath
+        poster_path: this.posterPath,
+        overview: this.overview
       });
     }
     //Flip local state, , re run *ngIf, button label swaps automatically.

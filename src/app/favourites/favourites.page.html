@@ -1,13 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>favourites</ion-title>
+    <ion-title>Favourite Movies</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">favourites</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!--loop the favourites array. *ngFor creates one card per stored movie. -->
+  <ion-card *ngFor="let movie of favourites">
+    <ion-img [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path"></ion-img>
+
+    <ion-card-header>
+      <ion-card-title>{{ movie.title }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!--pass the whole movie object so goToMovieDetails has title, poster_path, overview to forward via router state.-->
+      <ion-button (click)="goToMovieDetails(movie)">Details</ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
