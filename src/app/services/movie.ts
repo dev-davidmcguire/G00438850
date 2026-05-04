@@ -53,6 +53,16 @@ export class MovieService {
     localStorage.setItem('favourites', JSON.stringify(favourites));
   }
 
+  getPerson(id: number) {
+    //Fetches details of a person by TMDB id, returns observable subscribed to by details page.
+    return this.http.get(`https://api.themoviedb.org/3/person/${id}?api_key=${this.apiKey}`);
+  }
+
+  getPersonMovieCredits(id: number) {
+    //Fetches the movie credits for a person, returns observable with an array of movies theyve apperared in.
+    return this.http.get(`https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${this.apiKey}`);
+  }
+
   
 
 }
