@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, IonIcon, IonCard, IonCardContent } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, IonIcon, IonCard, IonCardContent, IonList, IonItem, IonLabel, IonThumbnail } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { home, heart } from 'ionicons/icons';
   templateUrl: './details.page.html',
   styleUrls: ['./details.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonButtons, IonIcon, IonCard, IonCardContent ]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonButtons, IonIcon, IonCard, IonCardContent, IonList, IonItem, IonLabel, IonThumbnail ]
 })
 export class DetailsPage implements OnInit {
 
@@ -54,5 +54,15 @@ export class DetailsPage implements OnInit {
   }
   goToFavourites() {
     this.router.navigate(['/favourites']);
+  }
+  //Navigate to movie details for a given movie from filmography list , same method as favourites.ts.
+  goToMovieDetails(movie: any) {
+    this.router.navigate(['/movie-details', movie.id], {
+      state: {
+        title: movie.title,
+        posterPath: movie.poster_path,
+        overview: movie.overview
+      }
+    });
   }
 }

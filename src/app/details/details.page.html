@@ -43,4 +43,23 @@
       <p *ngIf="person?.biography">{{ person.biography }}</p>
     </ion-card-content>
   </ion-card>
+
+  <!--Filmography list, one item per movie-->
+  <ion-list>
+    <!--loops through credits array (filled by getPersonMovieCredits in ngOnInit)-->
+    <ion-item *ngFor="let movie of credits" button="true" (click)="goToMovieDetails(movie)">
+      <ion-label>{{ movie.title }}</ion-label>
+      <!--Image container, matches spec, slot=end puts it to the right-->
+      <ion-thumbnail slot="end" *ngIf="movie.poster_path; else noPoster">
+        <!--Joins image base with poster_path from API-->
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title">
+      </ion-thumbnail>
+      <!--fallback in case poster_path is null, wrapped in thumnail to keep row height consistent-->
+      <ng-template #noPoster>
+        <ion-thumbnail slot="end">
+          <p>No image</p>
+        </ion-thumbnail>
+      </ng-template>
+    </ion-item>
+  </ion-list>
 </ion-content>

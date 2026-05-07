@@ -33,7 +33,7 @@ export class FavouritesPage implements OnInit {
         posterPath: movie.poster_path,
         overview: movie.overview
       }
-    })
+    });
   }
 
 }
