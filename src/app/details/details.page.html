@@ -33,6 +33,14 @@
       <p *ngIf="person?.place_of_birth">
         {{ person.place_of_birth }}
       </p>
+
+      <!--AKA, an array of othe names used. Check .length because an empty array would render.-->
+      <div *ngIf="person?.also_known_as?.length">
+        <p>Also Known as:</p>
+        <p *ngFor="let aka of person.also_known_as">{{ aka }}</p>
+      </div>
+      <!--Biography, long text from TMDB, use *ngIf in case its empty-->
+      <p *ngIf="person?.biography">{{ person.biography }}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>
