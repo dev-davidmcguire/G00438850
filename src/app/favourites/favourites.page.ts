@@ -1,23 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonImg, IonCardHeader, IonCardTitle, IonCardContent, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonImg, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie';
 import { Router } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { home } from 'ionicons/icons';
 
 @Component({
   selector: 'app-favourites',
   templateUrl: './favourites.page.html',
   styleUrls: ['./favourites.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonCard, IonImg, IonCardHeader, IonCardTitle, IonCardContent, IonButton]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonCard, IonImg, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonButtons, IonIcon ]
 })
 export class FavouritesPage implements OnInit {
   //Holds favourite movies read from localStorage. Template loops with ngFor
   favourites: any[] = [];
 
   //router to navigate to movie details page when details button is clicked
-  constructor(private movieService: MovieService, private router: Router) { }
+  constructor(private movieService: MovieService, private router: Router) {
+    addIcons({ home });
+   }
 
   ngOnInit() {
     //read favourites on page load. Synchronous, no subscribe.
@@ -34,6 +38,10 @@ export class FavouritesPage implements OnInit {
         overview: movie.overview
       }
     });
+  }
+  goToHome() {
+    //Navigate to home page.
+    this.router.navigate(['/home']);
   }
 
 }
