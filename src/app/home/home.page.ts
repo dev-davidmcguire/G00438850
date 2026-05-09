@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonRouterLink, IonIcon, IonList, IonCard, IonCardContent, IonInput, IonItem } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonRouterLink, IonIcon, IonList, IonCard, IonCardContent, IonInput, IonItem, IonSpinner } from '@ionic/angular/standalone';
 //Importing MovieService to access API methods.
 import { MovieService } from '../services/movie';
 //Allows for use of icons in the template
@@ -16,7 +16,7 @@ import { RouterLink, Router } from '@angular/router';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButtons, IonButton, IonRouterLink, RouterLink, IonIcon, IonList, IonCard, IonCardContent, IonInput, IonItem]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButtons, IonButton, IonRouterLink, RouterLink, IonIcon, IonList, IonCard, IonCardContent, IonInput, IonItem, IonSpinner]
 })
 export class HomePage implements OnInit {
 
@@ -28,6 +28,9 @@ export class HomePage implements OnInit {
 
   //Label for currently displayed movies. Seperate from searchQuery so the heading matches whats on screen.
   displayedQuery: string = '';
+
+  //Tracks whether the app is waiting for an api call, template will use this to show a loading spinner.
+  isLoading: boolean = false;
 
   //Dependency Injection - gives us instances of MovieService and Router.
   //Services injected here, not in imports array.
@@ -41,8 +44,11 @@ export class HomePage implements OnInit {
   ngOnInit() {
     //Call getTrending(), returns observable. we subscribe to it to get the data.
     //data.results is the array of movies returned.
+    //isLoading flips to true before the call. Flipped to false when data arrives.
+    this.isLoading = true;
     this.movieService.getTrending().subscribe((data: any) => {
       this.movies = data.results;
+      this.isLoading = false;
     })
   }
 
@@ -67,21 +73,25 @@ export class HomePage implements OnInit {
 
     //If user clicks search with nothing or only spaces, show trending movies.
     if (query === '' ) {
+      this.isLoading = true;
       this.movieService.getTrending().subscribe((data: any) => {
           this.movies = data.results;
 
           //Reset heading label, empty returns trending.
           this.displayedQuery = '';
+          this.isLoading = false;
 
       });
 
       //Send the trimmed query to TMDB
     } else {
+      this.isLoading = true;
       this.movieService.searchMovies(query).subscribe((data: any) => {
         this.movies = data.results;
         //Update heading label - the term that was searched.
         //inside .subscribe() so the heading does not update before the movies are returned.
         this.displayedQuery = query;
+        this.isLoading = false;
 
     });
 

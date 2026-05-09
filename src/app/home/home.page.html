@@ -27,18 +27,20 @@
   <ion-button expand="block" (click)="onSearch()">SEARCH</ion-button>
 
   <!--Return to Home button, displayed after a search has been carried out. displayedQuery is non empty when results are showing-->
-  <ion-button *ngIf="displayedQuery !== ''" expand="block"fill="outline" (click)="returnToHome()">RETURN TO HOME</ion-button>
-
-  <!--Heading above the list of trending movies.(ion-padding-start is an Ionic class that gives padding to the element) -->
-  <!--<h2 class="ion-padding-start">Today's Trending Movies</h2>-->
+  <ion-button *ngIf="displayedQuery !== ''" expand="block" fill="outline" (click)="returnToHome()">RETURN TO HOME</ion-button>
 
   <!--Two versions of heading, controlled by *ngIf. Only one present in the Dom-->
   <!--displayedQuery empty = trending heading shown. Otherwise, search heading shown with the query interpolated.-->
+  <!--padding start adds padding so the text doesnt appear flush against the edge of screen  -->
   <h2 *ngIf="displayedQuery === ''" class="ion-padding-start">Today's Trending Movies</h2>
   <h2 *ngIf="displayedQuery !== ''" class="ion-padding-start">{{ displayedQuery }} Movies</h2>
 
+  <!--Spinner shown while waiting for data to arrive.-->
+  <ion-spinner *ngIf="isLoading" class="ion-padding-start"></ion-spinner>
+
   <!--Container for the list of movie cards. Each card will be added to the list. List handles spacing automatically-->
-  <ion-list>
+  <!--*ngIf hides the list while loading, prevents stale search results being displayed-->
+  <ion-list *ngIf="!isLoading">
 
     <!--*ngFor loops through movies array (filled by getTrending() in ngOnInit). Creates one card per movie-->
     <!--butteon=true styles the card as clickable. Clicking the card calls goToMovie(), with this movies TMDB id-->

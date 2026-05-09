@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel, IonItem, IonThumbnail, IonIcon, IonButton, IonButtons } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel, IonItem, IonThumbnail, IonIcon, IonButton, IonButtons, IonSpinner } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../services/movie';
 import { addIcons } from 'ionicons';
@@ -12,7 +12,7 @@ import { home, heart } from 'ionicons/icons';
   templateUrl: './movie-details.page.html',
   styleUrls: ['./movie-details.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonListHeader, IonLabel, IonItem, IonThumbnail, IonIcon, IonButton, IonButtons]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonList, IonListHeader, IonLabel, IonItem, IonThumbnail, IonIcon, IonButton, IonButtons, IonSpinner]
 })
 export class MovieDetailsPage implements OnInit {
   //Hold movie id from URL route param. string | null = param.get() can return null if param is missing.
@@ -26,6 +26,9 @@ export class MovieDetailsPage implements OnInit {
 
   //Tracks if current movie is in favourites. Default before ngOnInit runs. Drives button label
   isFavourite: boolean = false;
+
+  //same as on home page
+  isLoading: boolean = false;
 
   //injected Activated route to read URL params, MovieService to call getMovieCredits.
   constructor(private route: ActivatedRoute, private movieService: MovieService, private router: Router) { 
@@ -41,6 +44,7 @@ export class MovieDetailsPage implements OnInit {
       this.isFavourite = this.movieService.isFavourite(Number(this.movieId));
       console.log('isFavourite check result:', this.isFavourite);
 
+      this.isLoading = true;
       //Fetch cast and crew when we have the id - Number() converts string id from URL to number API expects.
       this.movieService.getMovieCredits(Number(this.movieId)).subscribe((data: any) => {
         //Save cast/crew arrays to class property so the template can render using *ngFor.
@@ -48,6 +52,8 @@ export class MovieDetailsPage implements OnInit {
         this.crew = data.crew;
         console.log('Cast Received:', this.cast);
         console.log('Crew Received:', this.crew);
+        this.isLoading = false;
+
       })
     });
 

@@ -24,6 +24,11 @@
     Remove from Favourites
   </ion-button>
 
+  <!--spinner shows while waiting for API call for cast and crew-->
+  <ion-spinner *ngIf="isLoading" class="ion-padding-start"></ion-spinner>
+
+  <!--ng-container is an Angular wrapper, allows me to apply ngIf to multiple elements in the container.-->
+  <ng-container *ngIf="!isLoading">
   <!--Cast Section--> <!-- TODO: No fallback for null profile path. Need to add "No Image"-->
   <ion-list>
     <ion-list-header>
@@ -62,4 +67,5 @@
       </ion-item>
 
   </ion-list>
+</ng-container>
 </ion-content>

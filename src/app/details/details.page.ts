@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, IonIcon, IonCard, IonCardContent, IonList, IonItem, IonLabel, IonThumbnail } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, IonIcon, IonCard, IonCardContent, IonList, IonItem, IonLabel, IonThumbnail, IonSpinner } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { home, heart } from 'ionicons/icons';
   templateUrl: './details.page.html',
   styleUrls: ['./details.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonButtons, IonIcon, IonCard, IonCardContent, IonList, IonItem, IonLabel, IonThumbnail ]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonButtons, IonIcon, IonCard, IonCardContent, IonList, IonItem, IonLabel, IonThumbnail, IonSpinner ]
 })
 export class DetailsPage implements OnInit {
 
@@ -22,6 +22,8 @@ export class DetailsPage implements OnInit {
 
   //holds data from getPersonMovieCredits
   credits: any[] = [];
+
+  isLoading: boolean = false;
 
   constructor(private movieService: MovieService, 
     private route: ActivatedRoute,
@@ -35,16 +37,19 @@ export class DetailsPage implements OnInit {
       const personId = Number(params.get('id'));
       console.log('Person id from route param:', personId);
 
+      this.isLoading = true;
       //fetches data of a person,(name, dob, biography, etc).
       this.movieService.getPerson(personId).subscribe((data: any) => {
         //saves data from a person so it can be rendered by template
         this.person = data;
+        this.isLoading = false;
       });
 
       //fetches movie credits of a person.
       this.movieService.getPersonMovieCredits(personId).subscribe((data: any) => {
         //saves cast array, movies a person appeared in.
         this.credits = data.cast;
+        this.isLoading = false;
       });
     });
   }

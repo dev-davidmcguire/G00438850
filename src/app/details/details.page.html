@@ -13,6 +13,11 @@
 </ion-header>
 
 <ion-content>
+  <!--spinner shows while waiting for API call.-->
+  <ion-spinner *ngIf="isLoading" class="ion-padding-start"></ion-spinner>
+  
+  <!--ng-container is an Angular wrapper, allows me to apply ngIf to multiple elements in the container.-->
+  <ng-container *ngIf="!isLoading">
   <ion-card>
     <ion-card-content>
       <!--Image block, show profile pic if available, otherwise show "No image" text -->
@@ -62,4 +67,5 @@
       </ng-template>
     </ion-item>
   </ion-list>
+</ng-container>
 </ion-content>
