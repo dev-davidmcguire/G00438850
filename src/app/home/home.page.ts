@@ -87,4 +87,9 @@ export class HomePage implements OnInit {
 
     }
   }
+  returnToHome() {
+    //Clear the input and reuse onSearch to avoid duplicating the trending fetch (DRY).    
+    this.searchQuery = '';
+    this.onSearch();
+  }
 }
