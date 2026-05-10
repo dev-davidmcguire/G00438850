@@ -37,10 +37,15 @@
 
     <!--loop over cast array, one ion-item per cast member-->
     <ion-item *ngFor="let member of cast" button="true" (click)="goToPerson(member.id)">
-      <!--Put thumnail on the left-->
-      <ion-thumbnail slot="start">
+      <!--Put thumnail on the left, fallback to "No image" if profile_path is null-->
+      <ion-thumbnail slot="start" *ngIf="member.profile_path; else noCastImage">
         <img [src]="'https://image.tmdb.org/t/p/w500' + member.profile_path" />
       </ion-thumbnail>
+      <ng-template #noCastImage>
+        <ion-thumbnail slot="start">
+          <p>No image</p>
+        </ion-thumbnail>
+      </ng-template>
 
       <ion-label>
         <!--member declared in *ngFor, name returns actors real name-->
@@ -57,9 +62,14 @@
     </ion-list-header>
 
       <ion-item *ngFor="let member of crew" button="true" (click)="goToPerson(member.id)">
-        <ion-thumbnail slot="start">
+        <ion-thumbnail slot="start" *ngIf="member.profile_path; else noCrewImage">
           <img [src]="'https://image.tmdb.org/t/p/w500' + member.profile_path" />
         </ion-thumbnail>
+        <ng-template #noCrewImage>
+          <ion-thumbnail slot="start">
+            <p>No image</p>
+          </ion-thumbnail>
+        </ng-template>
         <ion-label>
           <h2>{{ member.name }}</h2>
           <p>{{ member.job }}</p>
